@@ -4,14 +4,19 @@ from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd
 import time
 
+email = ""
+senha = ""
+
+df = pd.read_excel(
+    r"C:\Users\felip\OneDrive\Documentos\exercicios\PEDIDO MEDICACAO.xlsx")
+
 # chegando na página de cadastros
 driver = webdriver.Chrome(executable_path=r"C:\webdrivers\chromedriver.exe")
 driver.get("https://scaweb.saude.gov.br/scaweb/")
 # preencher email e senha aqui
 
-driver.find_element_by_name("ds_email").send_keys(
-    "")
-driver.find_element_by_name("ds_senha_usuario").send_keys("")
+driver.find_element_by_name("ds_email").send_keys(email)
+driver.find_element_by_name("ds_senha_usuario").send_keys(senha)
 
 
 driver.find_element_by_name("acessar").send_keys(Keys.RETURN)
@@ -27,12 +32,11 @@ time.sleep(10)
 
 # organizar dados da planilha
 
-df = pd.read_excel(
-    r"C:\Users\felip\OneDrive\Documentos\exercicios\teste_pedido.xlsx")
 
+lastLine = len(df.index)
 lista = []
-for i in range(143):
-    if pd.isna(df.iloc[i, 5]):
+for i in range(lastLine):
+    if pd.isna(df.iloc[i, 4]) or df.iloc[i, 4] == 0:
         lista.append(i)
 
 df.drop(index=lista, inplace=True)
@@ -40,14 +44,14 @@ df.drop(df.index[len(df)-1], inplace=True)
 df.drop(df.index[0], inplace=True)
 df2 = df.reset_index(drop=True)
 
-
 a = [10, 20, 30, 40, 50, 60]
 b = 8
 c = 1
-# iterar pelo produtos
+print(df2)
+# iterar pelos produtos
 for j in df2.index:
     code = df2.iat[j, 0]
-    amount = df2.iat[j, 5]
+    amount = df2.iat[j, 4]
     # preencher pedido
     if j in a:
         nextPage = driver.find_element_by_xpath(
