@@ -6,8 +6,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import pandas as pd
 
-email = "felipefernandesmiranda@gmail.com"
-senha = "92949A"
+email = ""
+senha = ""
 
 df = pd.read_excel(
     r"C:\Users\felip\OneDrive\Documentos\exercicios\PEDIDO MEDICACAO.xlsx")
