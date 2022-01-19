@@ -10,7 +10,7 @@ email = ""
 senha = ""
 
 df = pd.read_excel(
-    r"C:\Users\felip\OneDrive\Documentos\exercicios\PEDIDO MEDICACAO.xlsx")
+    r"C:\Users\Downloads\.xlsx")
 driver = webdriver.Chrome(executable_path=r"C:\webdrivers\chromedriver.exe")
 wait = WebDriverWait(driver, 20)
 
@@ -33,12 +33,11 @@ wait.until(EC.element_to_be_clickable(
 lastLine = len(df.index)
 lista = []
 for i in range(lastLine):
-    if pd.isna(df.iloc[i, 4]) or df.iloc[i, 4] == 0:
+    value = str(df.iloc[i, 4])
+    if pd.isna(df.iloc[i, 4]) or df.iloc[i, 4] == 0 or not value.isalnum() or value.isalpha():
         lista.append(i)
 
 df.drop(index=lista, inplace=True)
-df.drop(df.index[len(df)-1], inplace=True)
-df.drop(df.index[0], inplace=True)
 df2 = df.reset_index(drop=True)
 
 a = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
