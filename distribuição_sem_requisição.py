@@ -61,8 +61,12 @@ for j in df2.index:
     driver.find_element_by_id(
         "requisicaoForm:itens:"+str(j)+":fireItem_produto_coSeqProdutoSuggest").send_keys(Keys.RETURN)
 
-    wait.until(EC.element_to_be_clickable((By.ID, "requisicaoForm:itens:" +
-               str(j)+":item_produto_coSeqProdutoSuggest:0:j_id306"))).click()
+    if (code == "BR0313379" or code == "BR0401411"):
+        wait.until(EC.element_to_be_clickable((By.ID, "requisicaoForm:itens:" +
+                   str(j)+":item_produto_coSeqProdutoSuggest:1:j_id306"))).click()
+    else:
+        wait.until(EC.element_to_be_clickable((By.ID, "requisicaoForm:itens:" +
+                   str(j)+":item_produto_coSeqProdutoSuggest:0:j_id306"))).click()
 
     driver.find_element_by_id(
         "requisicaoForm:itens:"+str(j)+":item_qtSolicitado").send_keys(amount)
