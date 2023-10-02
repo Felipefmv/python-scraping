@@ -13,7 +13,7 @@ import pandas as pd
 email = ""
 senha = ""
 df = pd.read_excel(
-    r"C:\Users\filipe.vieira\Downloads\.xlsx")
+    r"C:\Users\\.xlsx")
 
 options = Options()
 options.add_experimental_option("detach", True)
@@ -34,15 +34,26 @@ driver.find_element(By.NAME,"ds_email").send_keys(email)
 driver.find_element(By.NAME,"ds_senha_usuario").send_keys(senha)
 driver.find_element(By.NAME,"acessar").send_keys(Keys.RETURN)
 driver.find_element(By.ID,"sd3").send_keys(Keys.RETURN)
-driver.find_element(By.ID,"proceed-button").click()
-driver.back()
-driver.find_element(By.ID,"sd3").send_keys(Keys.RETURN)
-driver.find_element(By.ID,"proceed-button").click()
 
-search_alert = WebDriverWait(driver, 20).until(
-            EC.alert_is_present())
-alerts = Alert(driver)
-alerts.accept()
+
+try:
+    element = driver.find_element(By.ID,"proceed-button")
+    print("tem elemento")
+    driver.find_element(By.ID,"proceed-button").click()
+    driver.back()
+    driver.find_element(By.ID,"sd3").send_keys(Keys.RETURN)
+    driver.find_element(By.ID,"proceed-button").click()
+except:
+    print("não tem elemento")
+    
+try:
+    #tempo
+    search_alert = WebDriverWait(driver, 5).until(
+                EC.alert_is_present())
+    alerts = Alert(driver)
+    alerts.accept()
+except:
+    print("erro alerta")
 
 menu = driver.find_element(By.ID,"j_id29:j_id48:menuDrop_13")
 submenu = driver.find_element(By.ID,"j_id29:j_id48:menuItem_15")
